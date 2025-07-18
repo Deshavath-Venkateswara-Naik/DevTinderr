@@ -1,181 +1,69 @@
-📱 DevTinder – Developer Matchmaking Platform
-DevTinder is a modern matchmaking platform tailored for developers. Whether you're looking for collaborators, mentors, or project teammates, DevTinder helps connect like-minded devs based on skills, interests, and goals.
+# 💘 DevTinder – Match Developers with Skills & Collaboration
 
-🔥 Live Demo
-🔗 View Live Project
-🧑‍💻 Backend Repo
-🎨 Frontend Repo
+DevTinder is a full-stack web application that connects developers based on their skills, interests, and project goals. Whether you're looking for a coding partner, collaborator, or tech co-founder, DevTinder helps you find the perfect match.
 
-🚀 Features
-👥 Authentication & User Management
-Secure JWT-based login/signup
+---
 
-Role-based access (user/admin)
+## 🚀 Features
 
-Password encryption with bcrypt
+### 🧑‍💼 User Authentication
+- Secure Sign Up / Login with JWT
+- Password encryption using bcrypt
+- Session management
 
-📝 Developer Profiles
-Add skills, bio, GitHub, LinkedIn, portfolio, and resume (PDF upload or Razorpay)
+### 👤 Developer Profiles
+- Create and edit your profile
+- Add bio, skills, GitHub, LinkedIn, and portfolio links
+- Upload resume (PDF)
 
-View matched profiles based on tech stack
+### 🤝 Matchmaking
+- Intelligent matching based on skills, interests, and experience
+- Browse profiles with filters and search options
 
-💘 Matchmaking Algorithm
-Smart filtering based on:
+### 💬 Real-time Chat
+- One-to-one messaging using Socket.IO
+- Online/offline indicators
+- Typing status and message seen features
 
-Tech stack
+### 💸 Razorpay Payment Integration
+- Unlock premium features
+  - View/download locked resumes
+  - Boost profile visibility
+- Secure transaction logs and status
 
-Experience level
+### 📱 Responsive UI
+- Works on desktops, tablets, and mobile phones
+- Sleek design using React Bootstrap / TailwindCSS
 
-Location
+---
 
-Project interests
+## 🛠 Tech Stack
 
-💬 Real-Time Chat
-Socket.IO-based messaging
+### 🌐 Frontend
+- React.js
+- React Router
+- Axios
+- TailwindCSS / Bootstrap
+- Razorpay JS SDK
 
-Real-time chat rooms between matched users
+### ⚙️ Backend
+- Node.js
+- Express.js
+- MongoDB with Mongoose
+- JWT Authentication
+- Bcrypt Password Hashing
+- Socket.IO for chat
+- Razorpay Node SDK
 
-Typing indicators and seen status
+---
 
-🧾 Razorpay Integration
-Payment gateway integration for:
+## 🗃 Database Models (MongoDB)
 
-Resume unlock
+- `User`: name, email, password, skills, bio, social links, resume URL, role
+- `Chat`: participants, messages, timestamps
+- `Payment`: userId, amount, status, paymentId, receiptId
 
-Premium features (priority matching, top profile tag)
+---
 
-Transaction logs in dashboard
+## 📦 Project Structure
 
-📁 Resume Upload & Preview
-Upload and preview PDFs
-
-Download resumes after payment (if locked)
-
-🔍 Search & Filters
-Search by name, skill, or location
-
-Multi-skill filter
-
-Sort by most active or recently joined
-
-📱 Responsive Design
-Fully mobile-responsive with React Bootstrap / TailwindCSS
-
-Dark/light mode toggle
-
-🛠️ Tech Stack
-💻 Frontend
-React.js (with Hooks, Context API)
-
-React Router
-
-Axios
-
-React Bootstrap / TailwindCSS
-
-🖥️ Backend
-Node.js + Express.js
-
-MongoDB + Mongoose
-
-JWT Authentication
-
-Bcrypt for password hashing
-
-Razorpay SDK
-
-Socket.IO for real-time chat
-
-🔐 Security
-JWT for user session tokens
-
-Helmet for secure HTTP headers
-
-Rate limiter middleware
-
-Data validation with Joi
-
-🧪 Testing
-Unit & integration testing with Jest and Supertest
-
-Manual testing of payments and authentication flows
-
-⚙️ Installation & Setup
-Clone Repos:
-bash
-Copy
-Edit
-git clone https://github.com/your-username/devtinder-frontend.git
-git clone https://github.com/your-username/devtinder-backend.git
-Backend Setup:
-bash
-Copy
-Edit
-cd devtinder-backend
-npm install
-npm run dev
-Frontend Setup:
-bash
-Copy
-Edit
-cd devtinder-frontend
-npm install
-npm start
-🔑 Environment Variables
-Backend .env
-env
-Copy
-Edit
-PORT=5000
-MONGO_URI=your_mongo_connection_string
-JWT_SECRET=your_jwt_secret
-RAZORPAY_KEY_ID=your_razorpay_key
-RAZORPAY_KEY_SECRET=your_razorpay_secret
-Frontend .env
-env
-Copy
-Edit
-REACT_APP_API_BASE_URL=http://localhost:5000/api
-REACT_APP_RAZORPAY_KEY=your_razorpay_key
-📸 Screenshots
-Home Page	Profile Page	Chat	Razorpay
-
-📌 Future Enhancements
-Group discussions / dev circles
-
-Interview scheduling integration
-
-Resume parser with AI insights
-
-Github repo sync & contribution tracker
-
-Email notifications & reminders
-
-👨‍💻 Developer
-Deshavath Venkateswara Naik
-📧 naik@example.com
-🌐 venky.dev (or your portfolio)
-🪪 LinkedIn | GitHub
-
-📜 License
-MIT License © 2025 Deshavath Venkateswara Naik
-
-Would you like me to help generate:
-
-the actual Razorpay integration code for frontend/backend?
-
-a schema design for MongoDB for users, chats, and payments?
-
-a folder structure for frontend and backend?
-
-Let me know, and I’ll guide you through it.
-
-
-
-
-
-
-
-
-
-Ask ChatGPT
