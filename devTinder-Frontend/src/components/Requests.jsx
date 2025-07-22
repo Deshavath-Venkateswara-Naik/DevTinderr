@@ -7,36 +7,41 @@ import { useEffect, useState } from "react";
 const Requests = () => {
   const requests = useSelector((store) => store.requests);
   const dispatch = useDispatch();
+  const [loading, setLoading] = useState(true);
 
   const reviewRequest = async (status, _id) => {
     try {
-      const res = axios.post(
-        BASE_URL + "/request/review/" + status + "/" + _id,
+      await axios.post(
+        `${BASE_URL}/request/review/${status}/${_id}`,
         {},
         { withCredentials: true }
       );
       dispatch(removeRequest(_id));
-    } catch (err) {}
+    } catch (err) {
+      console.error("Review error:", err);
+    }
   };
 
   const fetchRequests = async () => {
     try {
-      const res = await axios.get(BASE_URL + "/user/requests/received", {
+      const res = await axios.get(`${BASE_URL}/user/requests/received`, {
         withCredentials: true,
       });
-
       dispatch(addRequests(res.data.data));
-    } catch (err) {}
+    } catch (err) {
+      console.error("Fetching requests failed", err);
+    } finally {
+      setLoading(false);
+    }
   };
 
   useEffect(() => {
     fetchRequests();
   }, []);
 
-  if (!requests) return;
-
-  if (requests.length === 0)
-    return <h1 className="flex justify-center my-10"> No Requests Found</h1>;
+  if (loading) return <p className="text-center mt-10">Loading...</p>;
+  if (!requests || requests.length === 0)
+    return <h1 className="flex justify-center my-10">No Requests Found</h1>;
 
   return (
     <div className="text-center my-10">
@@ -49,31 +54,29 @@ const Requests = () => {
         return (
           <div
             key={_id}
-            className=" flex justify-between items-center m-4 p-4 rounded-lg bg-base-300  mx-auto"
+            className="flex justify-between items-center m-4 p-4 rounded-lg bg-base-300 mx-auto max-w-4xl"
           >
             <div>
               <img
                 alt="photo"
-                className="w-20 h-20 rounded-full"
+                className="w-20 h-20 rounded-full object-cover"
                 src={photoUrl}
               />
             </div>
-            <div className="text-left mx-4 ">
-              <h2 className="font-bold text-xl">
-                {firstName + " " + lastName}
-              </h2>
+            <div className="text-left mx-4 flex-1">
+              <h2 className="font-bold text-xl">{firstName + " " + lastName}</h2>
               {age && gender && <p>{age + ", " + gender}</p>}
               <p>{about}</p>
             </div>
             <div>
               <button
-                className="btn btn-primary mx-2"
+                className="btn btn-error mx-2"
                 onClick={() => reviewRequest("rejected", request._id)}
               >
                 Reject
               </button>
               <button
-                className="btn btn-secondary mx-2"
+                className="btn btn-success mx-2"
                 onClick={() => reviewRequest("accepted", request._id)}
               >
                 Accept
@@ -85,4 +88,5 @@ const Requests = () => {
     </div>
   );
 };
+
 export default Requests;
