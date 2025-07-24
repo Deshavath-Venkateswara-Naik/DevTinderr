@@ -11,20 +11,17 @@ chatRouter.get("/chat/:targetUserId", userAuth, async (req, res) => {
   try {
     let chat = await Chat.findOne({
       participants: { $all: [userId, targetUserId] },
-    }).populate({
-      path: "messages.senderId",
-      select: "firstName lastName",
-    });
+    }).populate("messages.senderId", "firstName lastName");
+
     if (!chat) {
-      chat = new Chat({
-        participants: [userId, targetUserId],
-        messages: [],
-      });
+      chat = new Chat({ participants: [userId, targetUserId], messages: [] });
       await chat.save();
     }
+
     res.json(chat);
   } catch (err) {
-    console.error(err);
+    console.error("Fetch Chat Error:", err);
+    res.status(500).json({ error: "Failed to fetch chat." });
   }
 });
 
