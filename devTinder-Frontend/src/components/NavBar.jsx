@@ -13,58 +13,60 @@ const NavBar = () => {
     try {
       await axios.post(BASE_URL + "/logout", {}, { withCredentials: true });
       dispatch(removeUser());
-      return navigate("/login");
+      navigate("/login");
     } catch (err) {
-      // Error logic maybe redirect to error page
       console.log(err);
     }
   };
 
   return (
-    <div className="navbar bg-base-300">
-      <div className="flex-1">
-        <Link to="/" className="btn btn-ghost text-xl">
+    <header className="sticky top-0 z-50 bg-gray-100 text-gray-800 shadow-md">
+      <div className="navbar flex justify-between items-center px-6 py-3">
+        <Link
+          to="/"
+          className="text-2xl font-semibold text-gray-700 hover:text-blue-600"
+        >
           👩‍💻 DevTinder
         </Link>
-      </div>
-      {user && (
-        <div className="flex-none gap-2">
-          <div className="form-control">Welcome, {user.firstName}</div>
-          <div className="dropdown dropdown-end mx-5 flex">
-            <div
-              tabIndex={0}
-              role="button"
-              className="btn btn-ghost btn-circle avatar"
-            >
-              <div className="w-10 rounded-full">
-                <img alt="user photo" src={user.photoUrl} />
-              </div>
-            </div>
-            <ul
-              tabIndex={0}
-              className="menu menu-sm dropdown-content bg-base-100 rounded-box z-[1] mt-3 w-52 p-2 shadow"
-            >
-              <li>
-                <Link to="/profile" className="justify-between">
-                  Profile
-                  <span className="badge">New</span>
-                </Link>
-              </li>
-              <li>
-                <Link to="/connections">Connections</Link>
-              </li>
 
-              <li>
-                <Link to="/requests">Requests</Link>
-              </li>
-              <li>
-                <a onClick={handleLogout}>Logout</a>
-              </li> 
-            </ul>
+        {user && (
+          <div className="flex items-center gap-4">
+            <span className="text-gray-700 font-medium">
+              Welcome, {user.firstName}
+            </span>
+            <div className="dropdown dropdown-end">
+              <div
+                tabIndex={0}
+                role="button"
+                className="btn btn-ghost btn-circle avatar"
+              >
+                <div className="w-10 rounded-full ring ring-gray-400 ring-offset-gray-100 ring-offset-2">
+                  <img alt="user" src={user.photoUrl} />
+                </div>
+              </div>
+              <ul
+                tabIndex={0}
+                className="menu menu-sm dropdown-content mt-3 w-52 rounded-md bg-gray-200 text-gray-800 shadow-md border border-gray-300"
+              >
+                <li>
+                  <Link to="/profile" className="justify-between hover:bg-gray-300">
+                    Profile
+                    <span className="badge bg-blue-100 text-blue-700">New</span>
+                  </Link>
+                </li>
+                <li><Link to="/connections" className="hover:bg-gray-300">Connections</Link></li>
+                <li><Link to="/search" className="hover:bg-gray-300">Search</Link></li>
+                <li><Link to="/requests" className="hover:bg-gray-300">Requests</Link></li>
+                <li>
+                  <a onClick={handleLogout} className="hover:bg-red-100 text-red-600">Logout</a>
+                </li>
+              </ul>
+            </div>
           </div>
-        </div>
-      )}
-    </div>
+        )}
+      </div>
+    </header>
   );
 };
+
 export default NavBar;

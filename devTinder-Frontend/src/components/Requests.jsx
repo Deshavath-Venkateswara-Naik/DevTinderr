@@ -39,13 +39,21 @@ const Requests = () => {
     fetchRequests();
   }, []);
 
-  if (loading) return <p className="text-center mt-10">Loading...</p>;
+  if (loading)
+    return <p className="text-center mt-10 text-gray-300">Loading...</p>;
+
   if (!requests || requests.length === 0)
-    return <h1 className="flex justify-center my-10">No Requests Found</h1>;
+    return (
+      <h1 className="flex justify-center my-10 text-gray-300">
+        No Requests Found
+      </h1>
+    );
 
   return (
     <div className="text-center my-10">
-      <h1 className="text-bold text-white text-3xl">Connection Requests</h1>
+      <h1 className="font-bold text-3xl text-blue-300 mb-8">
+        Connection Requests
+      </h1>
 
       {requests.map((request) => {
         const { _id, firstName, lastName, photoUrl, age, gender, about } =
@@ -54,29 +62,33 @@ const Requests = () => {
         return (
           <div
             key={_id}
-            className="flex justify-between items-center m-4 p-4 rounded-lg bg-base-300 mx-auto max-w-4xl"
+            className="flex justify-between items-center m-4 p-4 rounded-lg bg-base-300 mx-auto max-w-4xl shadow-md hover:shadow-lg transition-shadow duration-200"
           >
             <div>
               <img
                 alt="photo"
-                className="w-20 h-20 rounded-full object-cover"
+                className="w-20 h-20 rounded-full object-cover border border-gray-400"
                 src={photoUrl}
               />
             </div>
             <div className="text-left mx-4 flex-1">
-              <h2 className="font-bold text-xl">{firstName + " " + lastName}</h2>
-              {age && gender && <p>{age + ", " + gender}</p>}
-              <p>{about}</p>
+              <h2 className="font-semibold text-xl text-white">
+                {firstName + " " + lastName}
+              </h2>
+              {age && gender && (
+                <p className="text-gray-400">{age + ", " + gender}</p>
+              )}
+              <p className="text-gray-300">{about}</p>
             </div>
             <div>
               <button
-                className="btn btn-error mx-2"
+                className="btn btn-error mx-2 text-white"
                 onClick={() => reviewRequest("rejected", request._id)}
               >
                 Reject
               </button>
               <button
-                className="btn btn-success mx-2"
+                className="btn btn-success mx-2 text-white"
                 onClick={() => reviewRequest("accepted", request._id)}
               >
                 Accept

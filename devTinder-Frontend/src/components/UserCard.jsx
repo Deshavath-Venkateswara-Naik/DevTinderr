@@ -5,14 +5,25 @@ import { removeUserFromFeed } from "../utils/feedSlice";
 import { useState } from "react";
 
 const UserCard = ({ user }) => {
-  const { _id, firstName, lastName, photoUrl, age, gender, about } = user;
+  const {
+    _id,
+    firstName,
+    lastName,
+    photoUrl,
+    age,
+    gender,
+    about,
+    skills,
+    location,
+  } = user;
+
   const dispatch = useDispatch();
   const [loading, setLoading] = useState(false);
 
   const handleSendRequest = async (status, userId) => {
     try {
       setLoading(true);
-      const res = await axios.post(
+      await axios.post(
         `${BASE_URL}/request/send/${status}/${userId}`,
         {},
         { withCredentials: true }
@@ -32,8 +43,17 @@ const UserCard = ({ user }) => {
       </figure>
       <div className="card-body">
         <h2 className="card-title">{firstName + " " + lastName}</h2>
+
         {age && gender && <p>{`${age}, ${gender}`}</p>}
+        {location && <p><strong>Location:</strong> {location}</p>}
         <p>{about}</p>
+
+        {skills && (
+          <p>
+            <strong>Skills:</strong> {skills}
+          </p>
+        )}
+
         <div className="card-actions justify-center my-4">
           <button
             className="btn btn-primary"

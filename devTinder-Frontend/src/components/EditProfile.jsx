@@ -12,6 +12,8 @@ const EditProfile = ({ user }) => {
   const [age, setAge] = useState(user.age || "");
   const [gender, setGender] = useState(user.gender || "");
   const [about, setAbout] = useState(user.about || "");
+  const [location, setLocation] = useState(user.location || "");
+  const [skills, setSkills] = useState(user.skills?.join(", ") || "");
   const [error, setError] = useState("");
   const dispatch = useDispatch();
   const [showToast, setShowToast] = useState(false);
@@ -29,6 +31,8 @@ const EditProfile = ({ user }) => {
           age,
           gender,
           about,
+          location,
+          skills: skills.split(",").map((s) => s.trim()).filter(Boolean),
         },
         { withCredentials: true }
       );
@@ -116,6 +120,28 @@ const EditProfile = ({ user }) => {
                     onChange={(e) => setAbout(e.target.value)}
                   />
                 </label>
+                <label className="form-control w-full max-w-xs my-2">
+                  <div className="label">
+                    <span className="label-text">Location:</span>
+                  </div>
+                  <input
+                    type="text"
+                    value={location}
+                    className="input input-bordered w-full max-w-xs"
+                    onChange={(e) => setLocation(e.target.value)}
+                  />
+                </label>
+                <label className="form-control w-full max-w-xs my-2">
+                  <div className="label">
+                    <span className="label-text">Skills (comma separated):</span>
+                  </div>
+                  <input
+                    type="text"
+                    value={skills}
+                    className="input input-bordered w-full max-w-xs"
+                    onChange={(e) => setSkills(e.target.value)}
+                  />
+                </label>
               </div>
               <p className="text-red-500">{error}</p>
               <div className="card-actions justify-center m-2">
@@ -127,7 +153,16 @@ const EditProfile = ({ user }) => {
           </div>
         </div>
         <UserCard
-          user={{ firstName, lastName, photoUrl, age, gender, about }}
+          user={{
+            firstName,
+            lastName,
+            photoUrl,
+            age,
+            gender,
+            about,
+            location,
+            skills: skills.split(",").map((s) => s.trim()),
+          }}
         />
       </div>
       {showToast && (

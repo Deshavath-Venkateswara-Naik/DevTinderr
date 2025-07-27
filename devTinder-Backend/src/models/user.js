@@ -45,11 +45,6 @@ const userSchema = new mongoose.Schema(
         values: ["male", "female", "other"],
         message: `{VALUE} is not a valid gender type`,
       },
-      // validate(value) {
-      //   if (!["male", "female", "others"].includes(value)) {
-      //     throw new Error("Gender data is not valid");
-      //   }
-      // },
     },
     isPremium: {
       type: Boolean,
@@ -73,6 +68,11 @@ const userSchema = new mongoose.Schema(
     },
     skills: {
       type: [String],
+      default: [],
+    },
+    location: {
+      type: String,
+      default: "",
     },
   },
   {
