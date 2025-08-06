@@ -1,31 +1,31 @@
 const nodemailer = require("nodemailer");
 
-// Create a transporter object using SMTP transport
+// Create a transporter object using Gmail SMTP
 const transporter = nodemailer.createTransport({
-  host: "smtp.gmail.com", // or your SMTP host
+  host: "smtp.gmail.com",
   port: 587,
-  secure: false, // true for port 465, false for other ports
+  secure: false, // true for 465, false for other ports
   auth: {
-    user: process.env.EMAIL_USER, // your email address (e.g., 'your@gmail.com')
-    pass: process.env.EMAIL_PASS, // your email password or app password
+    user: process.env.EMAIL_USER, // From .env -> deshavathvenkateswaranaik0193@gmail.com
+    pass: process.env.EMAIL_PASS, // From .env -> your app password
   },
 });
 
 const run = async (subject, body, toEmailId) => {
   const mailOptions = {
-    from: '"Akshay from DevTinder" <akshay@devtinder.in>', // sender address
+    from: `"Deshavath from DevTinder" <${process.env.EMAIL_USER}>`, // dynamic sender using your email
     to: toEmailId, // receiver
-    subject: subject, // Subject line
-    text: "This is the text format email", // plain text body
-    html: `<h1>${body}</h1>`, // HTML body
+    subject: subject,
+    text: "This is the plain text version of the email",
+    html: `<h3>${body}</h3>`, // formatted HTML body
   };
 
   try {
     const info = await transporter.sendMail(mailOptions);
-    console.log("Email sent: %s", info.messageId);
+    console.log("✅ Email sent: %s", info.messageId);
     return info;
   } catch (error) {
-    console.error("Email sending failed:", error);
+    console.error("❌ Email sending failed:", error.message);
     return error;
   }
 };

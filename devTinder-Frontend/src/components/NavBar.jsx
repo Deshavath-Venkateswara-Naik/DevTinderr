@@ -54,11 +54,33 @@ const NavBar = () => {
                     <span className="badge bg-blue-100 text-blue-700">New</span>
                   </Link>
                 </li>
-                <li><Link to="/connections" className="hover:bg-gray-300">Connections</Link></li>
-                <li><Link to="/search" className="hover:bg-gray-300">Search</Link></li>
-                <li><Link to="/requests" className="hover:bg-gray-300">Requests</Link></li>
                 <li>
-                  <a onClick={handleLogout} className="hover:bg-red-100 text-red-600">Logout</a>
+                  <Link to="/connections" className="hover:bg-gray-300">
+                    Connections
+                  </Link>
+                </li>
+                <li>
+                  <Link to="/search" className="hover:bg-gray-300">
+                    Search
+                  </Link>
+                </li>
+                <li>
+                  <Link to="/requests" className="hover:bg-gray-300">
+                    Requests
+                  </Link>
+                </li>
+                <li>
+                <Link to="/premium">Premium</Link>
+                </li>
+                <li>
+                  <Link to="/" className="hover:bg-gray-300">
+                    Feed
+                  </Link>
+                </li>
+                <li>
+                  <a onClick={handleLogout} className="hover:bg-red-100 text-red-600">
+                    Logout
+                  </a>
                 </li>
               </ul>
             </div>
