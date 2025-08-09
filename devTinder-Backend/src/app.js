@@ -9,13 +9,16 @@ require("./utils/cronjob");
 const app = express();
 const server = http.createServer(app);
 
-// Middleware
+// Middlewares
 app.use(
   cors({
-    origin: true, // your frontend port
+    origin: (origin, callback) => {
+      callback(null, origin || true); // reflect the request origin
+    },
     credentials: true,
   })
 );
+
 app.use(express.json());
 app.use(cookieParser());
 
