@@ -4,6 +4,14 @@ const authRouter = express.Router();
 const { validateSignUpData } = require("../utils/validation");
 const User = require("../models/user");
 const bcrypt = require("bcrypt");
+const isProd = process.env.NODE_ENV === "production";
+
+const cookieOptions = {
+  httpOnly: true,              // Prevent JavaScript access
+  secure: isProd,              // Only send over HTTPS in production
+  sameSite: "none",            // Required for cross-domain cookies (Vercel <-> Render)
+  expires: new Date(Date.now() + 8 * 3600000), // Keep your existing 8-hour expiry
+};
 
 authRouter.post("/signup", async (req, res) => {
   try {
@@ -27,9 +35,8 @@ authRouter.post("/signup", async (req, res) => {
     const savedUser = await user.save();
     const token = await savedUser.getJWT();
 
-    res.cookie("token", token, {
-      expires: new Date(Date.now() + 8 * 3600000),
-    });
+    // ✅ Set cookie for signup
+    res.cookie("token", token, cookieOptions);
 
     res.json({ message: "User Added successfully!", data: savedUser });
   } catch (err) {
@@ -50,9 +57,8 @@ authRouter.post("/login", async (req, res) => {
     if (isPasswordValid) {
       const token = await user.getJWT();
 
-      res.cookie("token", token, {
-        expires: new Date(Date.now() + 8 * 3600000),
-      });
+      // ✅ Use cookieOptions for login
+      res.cookie("token", token, cookieOptions);
       res.send(user);
     } else {
       throw new Error("Invalid credentials");
@@ -63,8 +69,12 @@ authRouter.post("/login", async (req, res) => {
 });
 
 authRouter.post("/logout", async (req, res) => {
+  // ✅ Update logout cookie to expire immediately cross-domain
   res.cookie("token", null, {
-    expires: new Date(Date.now()),
+    httpOnly: true,
+    secure: isProd,           
+    sameSite: "none",
+    expires: new Date(0),
   });
   res.send("Logout Successful!!");
 });

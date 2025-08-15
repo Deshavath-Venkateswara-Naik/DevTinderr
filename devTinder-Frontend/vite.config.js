@@ -1,10 +1,11 @@
 import { defineConfig } from 'vite';
 import react from '@vitejs/plugin-react';
 
-// https://vitejs.dev/config/
+// Vite config for production deployment
 export default defineConfig({
   plugins: [react()],
-  server: {
-    port: 5174, // 👈 change this to the port you want
+  // No `server` needed in production
+  build: {
+    outDir: 'dist', // default output folder for Vercel
   },
 });
