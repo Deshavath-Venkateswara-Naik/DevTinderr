@@ -44,9 +44,14 @@ const Requests = () => {
 
   if (!requests || requests.length === 0)
     return (
-      <h1 className="flex justify-center my-10 text-gray-300">
-        No Requests Found
-      </h1>
+      <div className="flex flex-col items-center justify-center min-h-[50vh] text-center">
+        <p className="text-2xl font-semibold text-gray-300 bg-base-300 px-6 py-3 rounded-lg shadow-lg border border-gray-700">
+          🚫 No Connection Requests Found
+        </p>
+        <p className="text-gray-400 mt-2">
+          You’ll see incoming requests here when someone connects with you.
+        </p>
+      </div>
     );
 
   return (

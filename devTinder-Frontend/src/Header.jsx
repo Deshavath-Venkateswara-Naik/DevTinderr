@@ -5,11 +5,11 @@ const Header = () => {
   const user = useSelector((store) => store.user);
 
   return (
-    <header className="bg-black text-white shadow-lg p-4 flex justify-between items-center border-b border-gray-800 sticky top-0 z-50">
+    <header className="bg-black/95 backdrop-blur-md text-white shadow-md px-6 py-3 flex justify-between items-center border-b border-gray-800 sticky top-0 z-50">
       {/* Logo */}
       <Link
         to="/"
-        className="text-2xl font-extrabold tracking-wide hover:text-gray-300 transition duration-300"
+        className="text-xl font-extrabold tracking-wide hover:text-yellow-400 transition duration-300"
       >
         DevTinder
       </Link>

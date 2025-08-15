@@ -1,49 +1,43 @@
-const socket = require("socket.io");
-const crypto = require("crypto");
-const { Chat } = require("../models/chat");
+const { Server } = require("socket.io");
 
-const getSecretRoomId = (userId, targetUserId) => {
-  return crypto
-    .createHash("sha256")
-    .update([userId.toString(), targetUserId.toString()].sort().join("$"))
-    .digest("hex");
-};
+let io;
 
-const initializeSocket = (server) => {
-  const io = socket(server, {
+function initializeSocket(server) {
+  io = new Server(server, {
     cors: {
-      origin: true,
-      credentials: true,
-    },
+      origin: "*", // adjust in production
+      methods: ["GET", "POST"]
+    }
   });
 
   io.on("connection", (socket) => {
-    socket.on("joinChat", ({ userId, targetUserId }) => {
-      const roomId = getSecretRoomId(userId, targetUserId);
+    console.log("User connected:", socket.id);
+
+    socket.on("joinRoom", (roomId) => {
       socket.join(roomId);
     });
 
-    socket.on("sendMessage", async ({ userId, targetUserId, firstName, lastName, text }) => {
-      try {
-        const roomId = getSecretRoomId(userId, targetUserId);
+    // Handle sending message
+    socket.on("sendMessage", (msgData) => {
+      // Send back instantly to sender
+      io.to(msgData.roomId).emit("messageReceived", {
+        ...msgData,
+        _id: Date.now().toString(), // temp ID before DB save
+      });
 
-        let chat = await Chat.findOne({
-          participants: { $all: [userId, targetUserId] },
-        });
+      // TODO: Save to DB async
+      // Example: saveChatMessage(msgData);
+    });
 
-        if (!chat) {
-          chat = new Chat({ participants: [userId, targetUserId], messages: [] });
-        }
-
-        chat.messages.push({ senderId: userId, text });
-        await chat.save();
-
-        io.to(roomId).emit("messageReceived", { userId, firstName, lastName, text });
-      } catch (err) {
-        console.error("Socket Message Error:", err);
-      }
+    socket.on("disconnect", () => {
+      console.log("User disconnected:", socket.id);
     });
   });
-};
+}
+
+function getIO() {
+  if (!io) throw new Error("Socket.io not initialized");
+  return io;
+}
 
 module.exports = initializeSocket;

@@ -4,6 +4,9 @@ const messageSchema = new mongoose.Schema(
   {
     senderId: { type: mongoose.Schema.Types.ObjectId, ref: "User" },
     text: String,
+    type: { type: String, enum: ["text", "audio"], default: "text" },
+    audioUrl: String,
+    durationMs: Number,
   },
   { timestamps: true }
 );

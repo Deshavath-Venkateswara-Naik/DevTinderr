@@ -15,6 +15,7 @@ const Login = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
+  // Handle Login
   const handleLogin = async () => {
     try {
       const res = await axios.post(
@@ -32,6 +33,7 @@ const Login = () => {
     }
   };
 
+  // Handle SignUp
   const handleSignUp = async () => {
     try {
       const res = await axios.post(
@@ -48,78 +50,94 @@ const Login = () => {
 
   return (
     <div className="flex justify-center my-10">
-      <div className="card bg-base-300 w-96 shadow-xl">
+      {/* Glassmorphic Card */}
+      <div className="card bg-base-300 bg-opacity-80 w-96 shadow-2xl border border-primary rounded-2xl backdrop-blur-md hover:scale-105 transition-transform duration-300">
         <div className="card-body">
-          <h2 className="card-title justify-center">
-            {isLoginForm ? "Login" : "Sign Up"}
+          {/* Title */}
+          <h2 className="card-title justify-center text-3xl font-extrabold text-primary">
+            {isLoginForm ? "Welcome Back" : "Create Account"}
           </h2>
+
+          {/* Form Fields */}
           <div>
             {!isLoginForm && (
               <>
                 <label className="form-control w-full max-w-xs my-2">
                   <div className="label">
-                    <span className="label-text">First Name</span>
+                    <span className="label-text font-semibold">First Name</span>
                   </div>
                   <input
                     type="text"
                     value={firstName}
-                    className="input input-bordered w-full max-w-xs"
+                    placeholder="John"
+                    className="input input-bordered w-full max-w-xs focus:ring-2 focus:ring-primary"
                     onChange={(e) => setFirstName(e.target.value)}
                   />
                 </label>
+
                 <label className="form-control w-full max-w-xs my-2">
                   <div className="label">
-                    <span className="label-text">Last Name</span>
+                    <span className="label-text font-semibold">Last Name</span>
                   </div>
                   <input
                     type="text"
                     value={lastName}
-                    className="input input-bordered w-full max-w-xs"
+                    placeholder="Doe"
+                    className="input input-bordered w-full max-w-xs focus:ring-2 focus:ring-primary"
                     onChange={(e) => setLastName(e.target.value)}
                   />
                 </label>
               </>
             )}
+
             <label className="form-control w-full max-w-xs my-2">
               <div className="label">
-                <span className="label-text">Email ID:</span>
+                <span className="label-text font-semibold">Email ID:</span>
               </div>
               <input
-                type="text"
+                type="email"
                 value={emailId}
-                className="input input-bordered w-full max-w-xs"
+                placeholder="example@mail.com"
+                className="input input-bordered w-full max-w-xs focus:ring-2 focus:ring-primary"
                 onChange={(e) => setEmailId(e.target.value)}
               />
             </label>
+
             <label className="form-control w-full max-w-xs my-2">
               <div className="label">
-                <span className="label-text">Password</span>
+                <span className="label-text font-semibold">Password</span>
               </div>
               <input
                 type="password"
                 value={password}
-                className="input input-bordered w-full max-w-xs"
+                placeholder="••••••••"
+                className="input input-bordered w-full max-w-xs focus:ring-2 focus:ring-primary"
                 onChange={(e) => setPassword(e.target.value)}
               />
             </label>
           </div>
-          <p className="text-red-500">{error}</p>
+
+          {/* Error Message */}
+          {error && <p className="text-red-500 text-sm font-semibold">{error}</p>}
+
+          {/* Submit Button */}
           <div className="card-actions justify-center m-2">
             <button
-              className="btn btn-primary"
+              className="btn btn-primary w-full text-lg font-semibold shadow-lg hover:shadow-xl transition-all duration-200"
               onClick={isLoginForm ? handleLogin : handleSignUp}
             >
               {isLoginForm ? "Login" : "Sign Up"}
             </button>
           </div>
 
+          {/* Switch Form Link */}
           <p
-            className="m-auto cursor-pointer py-2"
+            className="m-auto cursor-pointer py-2 text-primary font-medium hover:underline"
             onClick={() => setIsLoginForm((value) => !value)}
           >
             {isLoginForm
-              ? "New User? Signup Here"
-              : "Existing User? Login Here"}
+              ? "New User? Sign up here"
+              : "Already have an account? Login"}
           </p>
         </div>
       </div>
