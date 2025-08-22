@@ -36,7 +36,7 @@ async function sendConnectionEmail(req, toUser, status) {
         Log in to <strong>DevTinder</strong> now and check your <em>Requests</em> page for details.
       </p>
 
-      <a href="https://yourfrontenddomain.com/requests" target="_blank" style="display: inline-block; padding: 10px 20px; background: #4caf50; color: white; text-decoration: none; border-radius: 4px; margin-top: 20px;">
+      <a href="https://dev-tinderr-e8yk.vercel.app/requests" target="_blank" style="display: inline-block; padding: 10px 20px; background: #4caf50; color: white; text-decoration: none; border-radius: 4px; margin-top: 20px;">
         ➤ View Request
       </a>
 
